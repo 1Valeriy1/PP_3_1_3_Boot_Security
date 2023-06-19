@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+      table, th, td {
+border: 1px solid black;
+border-collapse: collapse;
+width:500px;
+height:30px;
+}
+    </style>
+</head>
+<body>
+
+<a th:href = "@{/admin/add}" > Add User </a>
+
+<table>
+    <tr>
+        <th>Id</th>
+        <th>FirstName</th>
+        <th>LastName</th>
+        <th>Email</th>
+        <th>Password</th>
+        <th>Roles</th>
+        <th colspan="2">Action</th>
+
+    </tr>
+
+    <tr th:each="user : ${users}">
+        <td th:utext="${user.getId()}">Id</td>
+        <td th:utext="${user.getFirstName()}">FirstName</td>
+        <td th:utext="${user.getLastName()}">LastName</td>
+        <td th:utext="${user.getEmail()}">email</td>
+        <td th:utext="${user.getPassword()}">password</td>
+        <td th:utext="${user.getRoles()}">password</td>
+        <td><form th:method="GET" th:action="@{/admin/find/{id}(id=${user.getId()})}">
+            <input type="submit" value="Update">
+        </form></td>
+        <td><form th:method="DELETE" th:action="@{/admin/delete/{id}(id=${user.getId()})}">
+            <input type="submit" value="Delete">
+        </form></td>
+    </tr>
+
+</table>
+
+<form  action="#"  th:action="@{/logout}" method="get">
+    <input type="submit" value="Logout"/>
+</form>
+</body>
+</html>
