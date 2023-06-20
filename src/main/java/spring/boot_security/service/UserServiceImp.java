@@ -17,36 +17,37 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service()
-public class UserServiceImp implements UserDetailsService {
+public class UserServiceImp implements UserDetailsService, UserService {
 
-   private final UserDao userDao;
+    private final UserDao userDao;
 
-   @Autowired
-   public UserServiceImp(UserDao userDao) {
+    @Autowired
+    public UserServiceImp(UserDao userDao) {
       this.userDao = userDao;
-   }
+    }
 
-
-   public void add(User user) {
+    @Override
+    @Transactional
+    public void add(User user) {
       userDao.save(user);
-   }
-
-   public List<User> listUsers() {
+    }
+    @Override
+    public List<User> listUsers() {
       return userDao.findAll();
-   }
-
-   public void delete(long id) {
+    }
+    @Override
+    @Transactional
+    public void delete(long id) {
       userDao.deleteById(id);
-   }
-
+    }
+    @Override
     public User getUserById(long id) {
         return userDao.getOne(id);
     }
-
-   public User getUserByName(String email) {
+    @Override
+    public User getUserByName(String email) {
       return userDao.findByEmail(email).get();
-   }
-
+    }
 
     @Override
     @Transactional
